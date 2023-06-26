@@ -37,4 +37,5 @@ p {
 
 .card-text.text {
   background-color: aliceblue;
+  padding: 5px 5px;
 }
