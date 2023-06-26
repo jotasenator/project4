@@ -8,10 +8,15 @@ from .models import User, Post
 
 from django.contrib.auth.decorators import login_required
 
+from django.core.paginator import Paginator
+
 
 def index(request):
     allPosts = Post.objects.all().order_by("created_at").reverse()
-    return render(request, "network/index.html", {"allPosts": allPosts})
+    paginator = Paginator(allPosts, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    return render(request, "network/index.html", {"page_obj": page_obj})
 
 
 @login_required
