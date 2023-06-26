@@ -30,6 +30,7 @@
         </a>
         {% if user.is_authenticated %}
         {% if request.user == post.user%}
+        <br />
         <button class="btn btn-link ml-3" onclick="showAlert('{{post.text}}')">Edit</button>
         {% endif %}
         {% endif %}
