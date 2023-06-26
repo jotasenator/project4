@@ -84,10 +84,10 @@ def register(request):
 
 
 def profile(request, username):
-    user = User.objects.get(username=username)
-    followers = user.followers.count()
-    followings = user.following.count()
-    posts = Post.objects.filter(user=user).order_by("-created_at")
+    profile_user = User.objects.get(username=username)
+    followers = profile_user.followers.count()
+    followings = profile_user.following.count()
+    posts = Post.objects.filter(user=profile_user).order_by("-created_at")
 
     paginator = Paginator(posts, 10)
     page_number = request.GET.get("page")
@@ -96,7 +96,7 @@ def profile(request, username):
         request,
         "network/profile.html",
         {
-            "user": user,
+            "profile_user": profile_user,
             "followers": followers,
             "followings": followings,
             "page_obj": page_obj,
