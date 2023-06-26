@@ -18,10 +18,11 @@ def index(request):
 def newPost(request):
     if request.method == "POST":
         text = request.POST["post"]
-        user = User.objects.get(pk=request.user.id)
-        post = Post(user=user, text=text)
-        post.save()
-        return HttpResponseRedirect(reverse("index"))
+        if text.strip() != "":
+            user = User.objects.get(pk=request.user.id)
+            post = Post(user=user, text=text)
+            post.save()
+    return HttpResponseRedirect(reverse("index"))
 
 
 def login_view(request):
