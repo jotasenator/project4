@@ -88,6 +88,10 @@ def profile(request, username):
     followers = user.followers.count()
     followings = user.following.count()
     posts = Post.objects.filter(user=user).order_by("-created_at")
+
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     return render(
         request,
         "network/profile.html",
@@ -95,6 +99,6 @@ def profile(request, username):
             "user": user,
             "followers": followers,
             "followings": followings,
-            "posts": posts,
+            "page_obj": page_obj,
         },
     )

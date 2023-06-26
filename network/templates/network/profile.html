@@ -9,7 +9,7 @@
     </div>
     {% for post in page_obj%}
     <div class="card-body new-post mt-3">
-        <h4 class=" card-title ml-3">{{post.user}}</h4>
+        <!-- <h4 class=" card-title ml-3">{{post.user}}</h4> -->
         {% if user.is_authenticated %}
         {% if request.user == post.user%}
         <button class="btn btn-link ml-3" onclick="showAlert('{{post.text}}')">Edit</button>
