@@ -39,3 +39,8 @@ p {
   background-color: aliceblue;
   padding: 5px 5px;
 }
+
+.user-link {
+  display: inline-block;
+  text-decoration: none !important;
+}

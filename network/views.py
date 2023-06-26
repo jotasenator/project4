@@ -12,7 +12,8 @@ from django.core.paginator import Paginator
 
 
 def index(request):
-    allPosts = Post.objects.all().order_by("created_at").reverse()
+    allPosts = Post.objects.all().order_by("-created_at")
+    # allPosts = Post.objects.all().order_by("created_at").reverse()
     paginator = Paginator(allPosts, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
@@ -80,3 +81,20 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+
+
+def profile(request, username):
+    user = User.objects.get(username=username)
+    followers = user.followers.count()
+    followings = user.following.count()
+    posts = Post.objects.filter(user=user).order_by("-created_at")
+    return render(
+        request,
+        "network/profile.html",
+        {
+            "user": user,
+            "followers": followers,
+            "followings": followings,
+            "posts": posts,
+        },
+    )

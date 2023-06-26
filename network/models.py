@@ -14,3 +14,9 @@ class Post(models.Model):
     )
     created_at = models.DateTimeField(default=timezone.now)
     text = models.TextField(default="")
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
+    followers = models.ManyToManyField(User, related_name="following")
+    following = models.ManyToManyField(User, related_name="followers")
