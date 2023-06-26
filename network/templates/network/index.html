@@ -24,15 +24,15 @@
     </div>
     {% endif %}
     {% for post in page_obj%}
-    <div class="new-post mt-3">
-        <h4 class="ml-3">{{post.user}}</h4>
+    <div class="card-body new-post mt-3">
+        <h4 class=" card-title ml-3">{{post.user}}</h4>
         {% if user.is_authenticated %}
         {% if request.user == post.user%}
         <button class="btn btn-link ml-3" onclick="showAlert('{{post.text}}')">Edit</button>
         {% endif %}
         {% endif %}
-        <p class="ml-3">{{post.text}}</p>
-        <p class="ml-3">{{post.created_at}}</p>
+        <p class="card-text ml-3 text">{{post.text}}</p>
+        <p class="card-text ml-3">{{post.created_at}}</p>
     </div>
     {% endfor %}
     <!-- boiler plate for navigtion (page_obj) -->

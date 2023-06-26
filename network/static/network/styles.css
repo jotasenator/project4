@@ -34,3 +34,7 @@ body {
 p {
   margin-bottom: 0;
 }
+
+.card-text.text {
+  background-color: aliceblue;
+}
