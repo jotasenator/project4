@@ -1,3 +1,26 @@
 :root {
   --blue-main-color: #007bff;
 }
+
+input:focus {
+  outline: 1px solid;
+  outline-color: var(--blue-main-color);
+}
+
+body {
+  padding: 10px;
+}
+
+.new-post {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 0 1rem;
+}
+.new-post input[type="text"] {
+  height: 80px;
+}
+
+.new-post,
+.new-post input[type="text"] {
+  border-radius: 5px;
+}

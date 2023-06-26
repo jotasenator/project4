@@ -1,5 +1,21 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-    TODO
+<h2 class="ml-3">All Posts</h2>
+<div>
+    <div class="new-post">
+        <h4 class="ml-3">New Post</h4>
+        <form method="post" class="form-inline">
+            {% csrf_token %}
+            <div class="w-100">
+                <div class="form-group ">
+                    <input class="w-100 pl-3 pr-3 ml-3 mr-3" type="text" name="post" value="" />
+                </div>
+                <div class="form-group mt-1 ml-3">
+                    <input class="btn btn-primary" type="submit" value="Post" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
