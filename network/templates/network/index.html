@@ -6,17 +6,21 @@
     {% if user.is_authenticated %}
     <div class="new-post">
         <h4 class="ml-3">New Post</h4>
-        <form method="post" class="form-inline" action="{% url 'newPost' %}">
+        <form method="post" id='post-form' class="form-inline" action="{% url 'newPost' %}">
             {% csrf_token %}
             <div class="w-100">
                 <div class="form-group ">
-                    <textarea class="w-100 pl-3 pr-3 ml-3 mr-3" type="text" name="post" value=""></textarea>
+                    <textarea id="post-textarea" class="w-100 pl-3 pr-3 ml-3 mr-3" type="text" name="post"
+                        value=""></textarea>
                 </div>
                 <div class="form-group mt-1 ml-3">
                     <input class="btn btn-primary" type="submit" value="Post" />
                 </div>
             </div>
         </form>
+        <div id="error-message" class="alert alert-danger mt-3 ml-3 mr-3 d-none">
+            Please, write something :)
+        </div>
     </div>
     {% endif %}
     {% for post in allPosts%}
@@ -37,6 +41,22 @@
     {
         alert( text );
     }
+
+    //if textbox is empty not to do anything
+    document.querySelector( "#post-form" ).addEventListener( "submit", ( event ) =>
+    {
+        let postText = document.querySelector( "#post-textarea" ).value;
+        if ( postText.trim() === '' )
+        {
+            event.preventDefault();
+            document.querySelector( "#error-message" ).classList.remove( 'd-none' );
+        } else
+        {
+            document.querySelector( "#error-message" ).classList.add( 'd-none' );
+        }
+
+
+    } )
 </script>
 
 {% endblock %}
