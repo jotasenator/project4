@@ -22,3 +22,15 @@ body {
   height: 50px;
   line-height: 40px;
 }
+
+.btn.btn-link,
+.btn.btn-link:hover,
+.btn.btn-link:active,
+.btn.btn-link:visited {
+  text-decoration: none;
+  padding: 0;
+}
+
+p {
+  margin-bottom: 0;
+}

@@ -10,7 +10,8 @@ from django.contrib.auth.decorators import login_required
 
 
 def index(request):
-    return render(request, "network/index.html")
+    allPosts = Post.objects.all().order_by("created_at").reverse()
+    return render(request, "network/index.html", {"allPosts": allPosts})
 
 
 @login_required
