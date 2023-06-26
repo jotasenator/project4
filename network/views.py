@@ -6,7 +6,10 @@ from django.urls import reverse
 
 from .models import User
 
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def index(request):
     return render(request, "network/index.html")
 
