@@ -89,6 +89,10 @@ def profile(request, username):
     followings = profile_user.following.count()
     posts = Post.objects.filter(user=profile_user).order_by("-created_at")
 
+    is_following = False
+    if request.user.is_authenticated:
+        is_following = profile_user.followers.filter(id=request.user.id).exists()
+
     paginator = Paginator(posts, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
@@ -100,5 +104,6 @@ def profile(request, username):
             "followers": followers,
             "followings": followings,
             "page_obj": page_obj,
+            "is_following": is_following,
         },
     )
