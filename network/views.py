@@ -85,15 +85,14 @@ def register(request):
 
 def profile(request, username):
     profile_user = User.objects.get(username=username)
-    followers = profile_user.followers.count()
-    followings = profile_user.following.count()
+    followers = profile_user.following.count()
+    followings = profile_user.followers.count()
     posts = Post.objects.filter(user=profile_user).order_by("-created_at")
 
     is_following = False
     if request.user.is_authenticated:
         profile, created = Profile.objects.get_or_create(user=request.user)
         is_following = profile.following.filter(id=profile_user.id).exists()
-        print("is_following", is_following)
 
     paginator = Paginator(posts, 10)
     page_number = request.GET.get("page")
@@ -115,8 +114,8 @@ def profile(request, username):
 def follow(request, username):
     profile, created = Profile.objects.get_or_create(user=request.user)
     profile_user = User.objects.get(username=username)
-    print("profile_user", profile_user)
-    request.user.profile.following.add(profile_user)
+    profile.following.add(profile_user)
+    profile_user.profile.followers.add(request.user)
     return HttpResponseRedirect(reverse("profile", args=[username]))
 
 
@@ -124,5 +123,6 @@ def follow(request, username):
 def unfollow(request, username):
     profile, created = Profile.objects.get_or_create(user=request.user)
     profile_user = User.objects.get(username=username)
-    request.user.profile.following.remove(profile_user)
+    profile.following.remove(profile_user)
+    profile_user.profile.followers.remove(request.user)
     return HttpResponseRedirect(reverse("profile", args=[username]))

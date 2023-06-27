@@ -18,5 +18,5 @@ class Post(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
-    followers = models.ManyToManyField(User, related_name="following")
-    following = models.ManyToManyField(User, related_name="followers")
+    followers = models.ManyToManyField(User, related_name="followers")
+    following = models.ManyToManyField(User, related_name="following")
