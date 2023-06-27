@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Post
+from .models import User, Post, Profile
 
 from django.contrib.auth.decorators import login_required
 
@@ -91,7 +91,9 @@ def profile(request, username):
 
     is_following = False
     if request.user.is_authenticated:
-        is_following = profile_user.followers.filter(id=request.user.id).exists()
+        profile, created = Profile.objects.get_or_create(user=request.user)
+        is_following = profile.following.filter(id=profile_user.id).exists()
+        print("is_following", is_following)
 
     paginator = Paginator(posts, 10)
     page_number = request.GET.get("page")
@@ -107,3 +109,20 @@ def profile(request, username):
             "is_following": is_following,
         },
     )
+
+
+@login_required
+def follow(request, username):
+    profile, created = Profile.objects.get_or_create(user=request.user)
+    profile_user = User.objects.get(username=username)
+    print("profile_user", profile_user)
+    request.user.profile.following.add(profile_user)
+    return HttpResponseRedirect(reverse("profile", args=[username]))
+
+
+@login_required
+def unfollow(request, username):
+    profile, created = Profile.objects.get_or_create(user=request.user)
+    profile_user = User.objects.get(username=username)
+    request.user.profile.following.remove(profile_user)
+    return HttpResponseRedirect(reverse("profile", args=[username]))
