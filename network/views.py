@@ -85,8 +85,8 @@ def register(request):
 
 def profile(request, username):
     profile_user = User.objects.get(username=username)
-    followers = profile_user.followers.count()
-    followings = profile_user.following.count()
+    fallowers = profile_user.followers.count()
+    fallowings = profile_user.following.count()
     posts = Post.objects.filter(user=profile_user).order_by("-created_at")
 
     paginator = Paginator(posts, 10)
@@ -97,8 +97,8 @@ def profile(request, username):
         "network/profile.html",
         {
             "profile_user": profile_user,
-            "followers": followers,
-            "followings": followings,
+            "fallowers": fallowers,
+            "fallowings": fallowings,
             "page_obj": page_obj,
         },
     )
