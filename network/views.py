@@ -12,6 +12,8 @@ from django.core.paginator import Paginator
 
 from django.http import JsonResponse
 
+import json
+
 
 def index(request):
     allPosts = Post.objects.all().order_by("-created_at")
@@ -161,3 +163,10 @@ def like(request, post_id):
     else:
         post.likes.add(request.user)
     return JsonResponse({"likes": post.likes.count()})
+
+
+@login_required
+def editPost(request):
+    data = json.loads(request.body)
+    post_text = data.get("post_text")
+    return JsonResponse({"message": "Post edited"})
