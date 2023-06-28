@@ -5,7 +5,6 @@ console.log( 'logic.js loaded' );
 window.addEventListener( "load", () =>
 {
     likeButton();
-    editPostText( postText );
 } );
 
 // Like button logic
