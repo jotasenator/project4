@@ -11,6 +11,10 @@
     <link rel="shortcut icon" href="{% static 'network/favicon.ico' %}" type="image/x-icon" />
     <script type="text/javascript" src="{% static 'network/logic.js' %}"></script>
 
+    {% if not user.is_authenticated %}
+    <script type="text/javascript" src="{% static 'network/likeButtonNotAuth.js' %}"></script>
+    {% endif %}
+
 </head>
 
 <body>

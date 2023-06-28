@@ -54,21 +54,25 @@
 </div>
 <script>
     //if textbox is empty not to do anything
-    document.querySelector( "#post-form" ).addEventListener( "submit", ( event ) =>
+    const postForm = document.querySelector( "#post-form" );
+    if ( postForm )
     {
-        let postText = document.querySelector( "#post-textarea" ).value;
-        if ( postText.trim() === '' )
+
+        document.querySelector( "#post-form" ).addEventListener( "submit", ( event ) =>
         {
-            event.preventDefault();
-            document.querySelector( "#error-message" ).classList.remove( 'd-none' );
-        } else
-        {
-            document.querySelector( "#error-message" ).classList.add( 'd-none' );
-        }
+            let postText = document.querySelector( "#post-textarea" ).value;
+            if ( postText.trim() === '' )
+            {
+                event.preventDefault();
+                document.querySelector( "#error-message" ).classList.remove( 'd-none' );
+            } else
+            {
+                document.querySelector( "#error-message" ).classList.add( 'd-none' );
+            }
 
 
-    } )
+        } );
+    }
 </script>
-
 
 {% endblock %}
