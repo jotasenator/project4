@@ -145,5 +145,5 @@ def following(request):
 
 
 def followers(request):
-    followers = request.user.profile.followers.all()
+    followers = request.user.profile.followers.all().order_by("username")
     return render(request, "network/followers.html", {"followers": followers})
