@@ -130,11 +130,18 @@ def unfollow(request, username):
 
 def following(request):
     following = request.user.profile.following.all()
+    following_without_post = request.user.profile.following.all().filter(
+        post__isnull=True
+    )
     allPosts = Post.objects.all().filter(user__in=following).order_by("-created_at")
     paginator = Paginator(allPosts, 10)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    return render(request, "network/following.html", {"page_obj": page_obj})
+    return render(
+        request,
+        "network/following.html",
+        {"page_obj": page_obj, "following_without_post": following_without_post},
+    )
 
 
 def followers(request):

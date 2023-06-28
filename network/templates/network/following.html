@@ -4,7 +4,7 @@
 <h2 class="ml-3">All Posts</h2>
 <div>
     {% if user.is_authenticated %}
-    {% if following %}
+
     {% for post in page_obj%}
     <div class="card-body new-post mt-3">
         <a class="user-link" href="{% url 'profile' post.user %}">
@@ -14,9 +14,11 @@
         <p class="card-text ml-3">{{post.created_at}}</p>
     </div>
     {% endfor %}
-    {% else %}
-    <p class="alert alert-warning ml-3 mr-3">You are not following anyone yet...</p>
-    {% endif %}
+
+    {% for mute_user in following_without_post %}
+    <p class="alert alert-warning ml-3 mr-3 mt-3"> User: <b>{{mute_user}}</b> has no post yet...</p>
+    {% endfor %}
+
     <!-- boiler plate for navigtion (page_obj) -->
     {% include 'network/pagination.html' %}
     {% endif %}
