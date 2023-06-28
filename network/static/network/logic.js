@@ -1,13 +1,14 @@
 
 console.log( 'logic.js loaded' );
 
-// Like button logic
-// Need to have them all
+
 window.addEventListener( "load", () =>
 {
     likeButton();
 } );
 
+// Like button logic
+// Need to have them all
 const likeButton = () => document.querySelectorAll( ".like-button" ).forEach( ( button ) =>
 {
     button.addEventListener( "click", () =>
