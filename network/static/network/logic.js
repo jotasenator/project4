@@ -41,6 +41,9 @@ const editPostText = ( postText ) =>
     // Create textarea element with the current post text
     const textarea = document.createElement( 'textarea' );
     textarea.value = postText;
+    textarea.classList.add( 'form-control', 'ml-3' );
+    //add this calculation to avoid overlapping and to remain the same if page shrinks
+    textarea.style.width = 'calc(99% - 1rem)';
 
     //Replace text from post wiht previous textarea element
     postTextElement.replaceWith( textarea );
@@ -48,6 +51,7 @@ const editPostText = ( postText ) =>
     // Create button save
     const saveButton = document.createElement( 'button' );
     saveButton.innerText = 'Save';
+    saveButton.classList.add( 'btn', 'btn-primary', 'ml-3', 'mt-3' );
 
     // Add fetch event to save button
     saveButton.addEventListener( 'click', () =>
