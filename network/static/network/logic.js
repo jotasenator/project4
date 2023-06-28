@@ -33,6 +33,10 @@ const editPostText = ( postText ) =>
 
     const postTextElement = event.target.parentElement.querySelector( '.text' );
 
+    // Hide the "Edit" button
+    const editButton = event.target;
+    editButton.classList.add( "d-none" );
+
     // Create textarea element with the current post text
     const textarea = document.createElement( 'textarea' );
     textarea.value = postText;
@@ -70,6 +74,10 @@ const editPostText = ( postText ) =>
 
                 // Remove the "Save" button
                 saveButton.remove();
+
+                // Show the "Edit" button again
+                editButton.classList.remove( "d-none" );
+
             } );
     } );
 
