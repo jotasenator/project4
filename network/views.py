@@ -10,6 +10,8 @@ from django.contrib.auth.decorators import login_required
 
 from django.core.paginator import Paginator
 
+from django.http import JsonResponse
+
 
 def index(request):
     allPosts = Post.objects.all().order_by("-created_at")
@@ -128,6 +130,7 @@ def unfollow(request, username):
     return HttpResponseRedirect(reverse("profile", args=[username]))
 
 
+@login_required
 def following(request):
     following = request.user.profile.following.all()
     following_without_post = request.user.profile.following.all().filter(
@@ -144,6 +147,17 @@ def following(request):
     )
 
 
+@login_required
 def followers(request):
     followers = request.user.profile.followers.all().order_by("username")
     return render(request, "network/followers.html", {"followers": followers})
+
+
+@login_required
+def like(request, post_id):
+    post = Post.objects.get(pk=post_id)
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+    return JsonResponse({"likes": post.likes.count()})

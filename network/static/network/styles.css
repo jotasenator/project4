@@ -44,3 +44,9 @@ p {
   display: inline-block;
   text-decoration: none !important;
 }
+
+.like-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}

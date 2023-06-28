@@ -14,6 +14,7 @@ class Post(models.Model):
     )
     created_at = models.DateTimeField(default=timezone.now)
     text = models.TextField(default="")
+    likes = models.ManyToManyField(User, related_name="likes")
 
 
 class Profile(models.Model):

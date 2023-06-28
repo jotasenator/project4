@@ -12,6 +12,17 @@
         </a>
         <p class="card-text ml-3 mr-3 text">{{post.text}}</p>
         <p class="card-text ml-3">{{post.created_at}}</p>
+        <div>
+            <button class="like-button" data-post-id="{{ post.id }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-heart"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-1.128 2.184-.163 4.815 2.291 6.906L8 12.875l4.309-2.916c2.454-2.091 3.418-4.722 2.291-6.906C13.486.878 10.4.28 8.717 2.01L8 2.748zm0 0l-.717-.737C5.6.281 2.514.878 1.4 3.053c-1.128 2.184-.163 4.815 2.291 6.906L8 12.875l4.309-2.916c2.454-2.091 3.418-4.722 2.291-6.906C13.486.878 10.4.28 8.717 2.01L8 2.748z" />
+                </svg>
+            </button>
+
+            <span id="likes-{{ post.id }}">{{ post.likes.count }}</span>
+        </div>
     </div>
     {% endfor %}
 
