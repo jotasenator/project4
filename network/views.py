@@ -135,3 +135,8 @@ def following(request):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     return render(request, "network/following.html", {"page_obj": page_obj})
+
+
+def followers(request):
+    followers = request.user.profile.followers.all()
+    return render(request, "network/followers.html", {"followers": followers})

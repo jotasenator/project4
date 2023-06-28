@@ -1,0 +1,24 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+<h2 class="ml-3">Followers</h2>
+<div>
+    {% if user.is_authenticated %}
+    {% if followers %}
+    {% for user in followers%}
+    <div class="card-body new-post mt-3">
+        <a class="user-link" href="{% url 'profile' user %}">
+            <h4 class=" card-title ml-3">{{user}}</h4>
+        </a>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p class="alert alert-warning ml-3 mr-3">You have no followers yet</p>
+    {% endif %}
+    {% endif %}
+</div>
+<script>
+
+</script>
+
+{% endblock %}
