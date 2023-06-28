@@ -28,6 +28,7 @@ const likeButton = () => document.querySelectorAll( ".like-button" ).forEach( ( 
 
 const editPostText = ( postText ) =>
 {
+    console.log( 'editPostText called!!!' );
     // obtain security token from page!!!
     const csrftoken = document.cookie.split( ';' ).find( cookie => cookie.trim().startsWith( 'csrftoken=' ) ).split( '=' )[ 1 ];
 
@@ -83,7 +84,31 @@ const editPostText = ( postText ) =>
 
     // Add button after textarea
     textarea.insertAdjacentElement( 'afterend', saveButton );
+
+    //can not call the onclickOut as anonymous function for removing it after, so need to use this wrapper
+    const onClickOutWrapper = ( event ) => onClickOut( event, textarea, saveButton, editButton, postTextElement, onClickOutWrapper );
+
+    setTimeout( () =>
+    {
+        document.addEventListener( 'click', onClickOutWrapper );
+
+    }, 0 );
+
+};
+
+//click out textarea or save button will cancel the edit
+const onClickOut = ( event, textarea, saveButton, editButton, postTextElement, onClickOutWrapper ) =>
+{
+    if ( event.target !== textarea && event.target !== saveButton &&
+        !textarea.contains( event.target ) &&
+        !saveButton.contains( event.target ) )
+    {
+        console.log( 'onClickOut called!!!' );
+        document.removeEventListener( 'click', onClickOutWrapper );
+        textarea.replaceWith( postTextElement );
+        saveButton.remove();
+        editButton.classList.remove( "d-none" );
+
+    }
 }
-
-
 
