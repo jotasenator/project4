@@ -14,6 +14,6 @@ const disabledLikeButtons = () =>
     {
         button.disabled = true;
         button.style.cursor = 'default';
-        button.style.opacity = 0.5;
+        button.style.opacity = 0.2;
     } );
 };
