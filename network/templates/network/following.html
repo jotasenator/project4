@@ -16,7 +16,12 @@
     {% endfor %}
 
     {% for mute_user in following_without_post %}
-    <p class="alert alert-warning ml-3 mr-3 mt-3"> User: <b>{{mute_user}}</b> has no post yet...</p>
+    <div class="card-body new-post mt-3">
+        <a class="user-link" href="{% url 'profile' mute_user %}">
+            <h4 class=" card-title ml-3">{{mute_user}}</h4>
+        </a>
+        <p class="alert alert-warning ml-3 mr-3 mt-3"> User: <b>{{mute_user}}</b> has no post yet...</p>
+    </div>
     {% endfor %}
 
     <!-- boiler plate for navigtion (page_obj) -->
