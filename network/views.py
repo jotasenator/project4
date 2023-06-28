@@ -126,3 +126,12 @@ def unfollow(request, username):
     profile.following.remove(profile_user)
     profile_user.profile.followers.remove(request.user)
     return HttpResponseRedirect(reverse("profile", args=[username]))
+
+
+def following(request):
+    following = request.user.profile.following.all()
+    allPosts = Post.objects.all().filter(user__in=following).order_by("-created_at")
+    paginator = Paginator(allPosts, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    return render(request, "network/following.html", {"page_obj": page_obj})

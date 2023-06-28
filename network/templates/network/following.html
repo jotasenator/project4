@@ -1,0 +1,49 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+<h2 class="ml-3">All Posts</h2>
+<div>
+    {% if user.is_authenticated %}
+    {% for post in page_obj%}
+    <div class="card-body new-post mt-3">
+        <a class="user-link" href="{% url 'profile' post.user %}">
+            <h4 class=" card-title ml-3">{{post.user}}</h4>
+        </a>
+        {% if user.is_authenticated %}
+        {% if request.user == post.user%}
+        <br />
+        <button class="btn btn-link ml-3" onclick="showAlert('{{post.text}}')">Edit</button>
+        {% endif %}
+        {% endif %}
+        <p class="card-text ml-3 mr-3 text">{{post.text}}</p>
+        <p class="card-text ml-3">{{post.created_at}}</p>
+    </div>
+    {% endfor %}
+    <!-- boiler plate for navigtion (page_obj) -->
+    {% include 'network/pagination.html' %}
+    {% endif %}
+</div>
+<script>
+    function showAlert ( text )
+    {
+        alert( text );
+    }
+
+    //if textbox is empty not to do anything
+    document.querySelector( "#post-form" ).addEventListener( "submit", ( event ) =>
+    {
+        let postText = document.querySelector( "#post-textarea" ).value;
+        if ( postText.trim() === '' )
+        {
+            event.preventDefault();
+            document.querySelector( "#error-message" ).classList.remove( 'd-none' );
+        } else
+        {
+            document.querySelector( "#error-message" ).classList.add( 'd-none' );
+        }
+
+
+    } )
+</script>
+
+{% endblock %}
