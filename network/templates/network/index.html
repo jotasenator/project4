@@ -33,6 +33,7 @@
         <br />
         <button class="btn btn-link ml-3" data-post-id="{{ post.id }}"
             onclick="editPostText('{{post.text}}')">Edit</button>
+        <span id="edit-{{ post.id }}" class="alert alert-success d-none"></span>
         {% endif %}
         {% endif %}
         <p class="card-text ml-3 mr-3 text">{{post.text}}</p>

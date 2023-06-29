@@ -81,6 +81,20 @@ const editPostText = ( postText ) =>
                 textarea.replaceWith( postTextElement );
                 postTextElement.innerText = newPostText;
 
+                //send message from server editPost
+                const editSuccessMessageElement = document.querySelector( `#edit-${ postId }` );
+                editSuccessMessageElement.classList.remove( "d-none" );
+                editSuccessMessageElement.style.padding = '5px';
+                editSuccessMessageElement.innerHTML = data.message;
+
+                // Hide the message after 1s and hide the element
+                setTimeout( () =>
+                {
+                    editSuccessMessageElement.innerHTML = "";
+                    editSuccessMessageElement.classList.add( "d-none" );
+                }, 1000 );
+
+
                 // Remove the "Save" button
                 saveButton.remove();
 
