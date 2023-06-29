@@ -62,8 +62,32 @@ const editPostText = ( postText ) =>
         // Obtain new content from textarea
         const newPostText = textarea.value;
 
-        // Fetch request to /editPost
-        fetch( '/editPost', {
+        const messageElement = document.querySelector( `#edit-${ postId }` );
+
+        // if no content change display alert warning
+        if ( newPostText === postText )
+        {
+            messageElement.classList.remove( "d-none" );
+            messageElement.classList.add( "alert-warning" );
+            messageElement.style.padding = '0px';
+            messageElement.style.marginLeft = '1rem';
+            messageElement.style.marginBottom = '1rem';
+            messageElement.innerHTML = "No changes made";
+
+
+            //Hide the message after 1s and hide the element;
+            setTimeout( () =>
+            {
+                messageElement.innerHTML = "";
+                messageElement.classList.add( "d-none" );
+                messageElement.classList.remove( "alert-warning" );
+            }, 1000 );
+
+        }
+
+        // Fetch request to /editPost if content changed
+
+        ( newPostText !== postText ) && fetch( '/editPost', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -82,16 +106,18 @@ const editPostText = ( postText ) =>
                 postTextElement.innerText = newPostText;
 
                 //send message from server editPost
-                const editSuccessMessageElement = document.querySelector( `#edit-${ postId }` );
-                editSuccessMessageElement.classList.remove( "d-none" );
-                editSuccessMessageElement.style.padding = '5px';
-                editSuccessMessageElement.innerHTML = data.message;
+
+                messageElement.classList.remove( "d-none", "alert-warning" );
+                messageElement.classList.add( "alert-success" );
+                messageElement.style.padding = '5px';
+                messageElement.innerHTML = data.message;
 
                 // Hide the message after 1s and hide the element
                 setTimeout( () =>
                 {
-                    editSuccessMessageElement.innerHTML = "";
-                    editSuccessMessageElement.classList.add( "d-none" );
+                    messageElement.innerHTML = "";
+                    messageElement.classList.add( "d-none" );
+                    messageElement.classList.remove( "alert-success" );
                 }, 1000 );
 
 
