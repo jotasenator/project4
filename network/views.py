@@ -169,4 +169,11 @@ def like(request, post_id):
 def editPost(request):
     data = json.loads(request.body)
     post_text = data.get("post_text")
+    post_id = data.get("post_id")
+
+    # Update the Post object with the new text
+    post = Post.objects.get(id=post_id)
+    post.text = post_text
+    post.save()
+
     return JsonResponse({"message": "Post edited"})

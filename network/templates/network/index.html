@@ -31,7 +31,8 @@
         {% if user.is_authenticated %}
         {% if request.user == post.user%}
         <br />
-        <button class="btn btn-link ml-3" onclick="editPostText('{{post.text}}')">Edit</button>
+        <button class="btn btn-link ml-3" data-post-id="{{ post.id }}"
+            onclick="editPostText('{{post.text}}')">Edit</button>
         {% endif %}
         {% endif %}
         <p class="card-text ml-3 mr-3 text">{{post.text}}</p>
@@ -49,6 +50,7 @@
         </div>
     </div>
     {% endfor %}
+
     <!-- boiler plate for navigtion (page_obj) -->
     {% include 'network/pagination.html' %}
 </div>

@@ -17,68 +17,68 @@ from network.views import (
     like,
     editPost,
 )
-from network.models import Profile
+from network.models import Profile, Post
 
 
 class TestIndexViewResolution(SimpleTestCase):
     def test_index_url_is_resolved(self):
         url = reverse("index")
-        print(resolve(url))
+
         self.assertEquals(resolve(url).func, index)
 
     def test_login_url_is_resolved(self):
         url = reverse("login")
-        print(resolve(url))
+
         self.assertEquals(resolve(url).func, login_view)
 
     def test_logout_url_is_resolved(self):
         url = reverse("logout")
-        print(resolve(url))
+
         self.assertEquals(resolve(url).func, logout_view)
 
     def test_register_url_is_resolved(self):
         url = reverse("register")
-        print(resolve(url))
+
         self.assertEquals(resolve(url).func, register)
 
     def test_newPost_url_is_resolved(self):
         url = reverse("newPost")
-        print(resolve(url))
+
         self.assertEquals(resolve(url).func, newPost)
 
     def test_profile_url_is_resolved(self):
         url = reverse("profile", kwargs={"username": "test_user_made_up"})
-        print(resolve(url))
+
         self.assertEquals(resolve(url).func, profile)
 
     def test_follow_url_is_resolved(self):
         url = reverse("follow", kwargs={"username": "test_user_made_up"})
-        print(resolve(url))
+
         self.assertEquals(resolve(url).func, follow)
 
     def test_unfollow_url_is_resolved(self):
         url = reverse("unfollow", kwargs={"username": "test_user_made_up"})
-        print(resolve(url))
+
         self.assertEquals(resolve(url).func, unfollow)
 
     def test_following_url_is_resolved(self):
         url = reverse("following")
-        print(resolve(url))
+
         self.assertEquals(resolve(url).func, following)
 
     def test_followers_url_is_resolved(self):
         url = reverse("followers")
-        print(resolve(url))
+
         self.assertEquals(resolve(url).func, followers)
 
     def test_like_url_is_resolved(self):
         url = reverse("like", kwargs={"post_id": 123})
-        print(resolve(url))
+
         self.assertEquals(resolve(url).func, like)
 
     def test_editPost_url_is_resolved(self):
         url = reverse("editPost")
-        print(resolve(url))
+
         self.assertEquals(resolve(url).func, editPost)
 
 
@@ -96,14 +96,14 @@ class TestIndexView(TestCase):
     def test_index_url_is_resolved(self):
         url = reverse("index")
         response = self.client.get(url)
-        print(resolve(url))
+
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "network/index.html")
 
     def test_login_url_is_resolved(self):
         url = reverse("login")
         response = self.client.get(url)
-        print(resolve(url))
+
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "network/login.html")
 
@@ -113,13 +113,13 @@ class TestIndexView(TestCase):
 
         url = reverse("logout")
         response = self.client.get(url)
-        print(resolve(url))
+
         self.assertRedirects(response, "/")
 
     def test_register_url_is_resolved(self):
         url = reverse("register")
         response = self.client.get(url)
-        print(resolve(url))
+
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "network/register.html")
 
@@ -129,7 +129,7 @@ class TestIndexView(TestCase):
 
         url = reverse("newPost")
         response = self.client.post(url, data={"post": "Test post"})
-        print(resolve(url))
+
         self.assertRedirects(response, "/")
 
     def test_profile_url_is_resolved(self):
@@ -138,7 +138,7 @@ class TestIndexView(TestCase):
 
         url = reverse("profile", kwargs={"username": "testuser"})
         response = self.client.get(url)
-        print(resolve(url))
+
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "network/profile.html")
 
@@ -148,7 +148,7 @@ class TestIndexView(TestCase):
 
         url = reverse("follow", kwargs={"username": "testuser"})
         response = self.client.get(url)
-        print(resolve(url))
+
         self.assertRedirects(response, "/profile/testuser")
 
     def test_unfollow_url_is_resolved(self):
@@ -157,7 +157,7 @@ class TestIndexView(TestCase):
 
         url = reverse("unfollow", kwargs={"username": "testuser"})
         response = self.client.get(url)
-        print(resolve(url))
+
         self.assertRedirects(response, "/profile/testuser")
 
     def test_following_url_is_resolved(self):
@@ -166,7 +166,7 @@ class TestIndexView(TestCase):
 
         url = reverse("following")
         response = self.client.get(url)
-        print(resolve(url))
+
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "network/following.html")
 
@@ -176,29 +176,40 @@ class TestIndexView(TestCase):
 
         url = reverse("followers")
         response = self.client.get(url)
-        print(resolve(url))
+        (resolve(url))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "network/followers.html")
 
-    # @patch("network.views.Post")
-    # def test_like_url_is_resolved(self, mock_post):
-    #     # Set the behavior of the Post.objects.get method to raise a DoesNotExist exception
-    #     mock_post.DoesNotExist = ObjectDoesNotExist
-    #     mock_post.objects.get.side_effect = ObjectDoesNotExist
+    def test_like_url_is_resolved(self):
+        # Log in the test user
+        self.client.login(username="testuser", password="testpass")
 
-    #     # Log in the test user
-    #     self.client.login(username="testuser", password="testpass")
+        # Create a test post
+        post = Post.objects.create(user=self.user, text="Test post")
+        # PK of the Post object I've created above
+        post_id = post.id
 
-    #     url = reverse("like", kwargs={"post_id": 10})
-    #     response = self.client.get(url)
-    #     print(resolve(url))
-    #     self.assertRedirects(response, "/")
+        url = reverse("like", args=[post_id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
 
-    # def test_editPost_url_is_resolved(self):
-    #     # Log in the test user
-    #     self.client.login(username="testuser", password="testpass")
+    # fun fact, by doing this test I could see I had an error on my editPost function
+    # I was editing but not saving the post, so after refreshing the page the edit was lost :)
 
-    #     url = reverse("editPost")
-    #     response = self.client.get(url)
-    #     print(resolve(url))
-    #     self.assertEqual(response.status_code, 200)
+    def test_editPost_url_is_resolved(self):
+        # Log in the test user
+        self.client.login(username="testuser", password="testpass")
+
+        # Create a test post
+        post = Post.objects.create(user=self.user, text="old post")
+        # PK of the Post object I've created above
+        post_id = post.id
+
+        url = reverse("editPost")
+        data = {"post_text": "new post", "post_id": post_id}
+        response = self.client.post(url, data, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+        # Check that the post text has been updated
+        updated_post = Post.objects.get(id=post_id)
+        self.assertEqual(updated_post.text, "new post")

@@ -38,6 +38,9 @@ const editPostText = ( postText ) =>
     const editButton = event.target;
     editButton.classList.add( "d-none" );
 
+    //get the value of the data-post-id attribute
+    const postId = editButton.dataset.postId;
+
     // Create textarea element with the current post text
     const textarea = document.createElement( 'textarea' );
     textarea.value = postText;
@@ -67,7 +70,8 @@ const editPostText = ( postText ) =>
                 'X-CSRFToken': csrftoken
             },
             body: JSON.stringify( {
-                post_text: newPostText
+                post_text: newPostText,
+                post_id: postId,
             } )
         } )
             .then( response => response.json() )
